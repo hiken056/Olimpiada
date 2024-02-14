@@ -3,7 +3,7 @@
 using namespace std;
 
 int N;
-long long dp[47];
+long long dp[47]; //fibo * 2
 
 
 int main () {

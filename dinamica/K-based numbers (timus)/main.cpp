@@ -3,7 +3,7 @@
 using namespace std;
 
 int N, K;
-int dp[20][20];
+int dp[20][20]; //nr de numere de i cifre cu ultima cif j
 
 int main () {
     cin >> N >> K;

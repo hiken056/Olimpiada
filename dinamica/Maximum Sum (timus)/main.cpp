@@ -2,7 +2,7 @@
 
 using namespace std;
 #define LIMN 100
-int dp[LIMN+5][LIMN+5];
+int dp[LIMN+5][LIMN+5]; //suma partiala pe matrici
 int N, a;
 int main() {
     cin >> N;
