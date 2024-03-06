@@ -39,6 +39,10 @@ void unite ( int x, int y) {
 
 int main () {
     fin >> N >> M;
+    for ( int i = 1; i <= N; ++ i) {
+        root[i] = i;
+        cnt[i] = 1;
+    }
     int x, y;
     while ( M -- ) {
         fin >> x >> y;
@@ -47,7 +51,7 @@ int main () {
     fin >> M;
     while ( M -- ) {
         fin >> x;
-        fout << cnt[getRoot(x)] << " ";
+        fout << cnt[getRoot(x)] << '\n';
     }
     return 0;
 }
