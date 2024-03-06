@@ -34,5 +34,8 @@ int main () {
         sort(G[i].begin(), G[i].end());
     }
     dfs(X);
+
+    fin.close();
+    fout.close();
     return 0;
 }
