@@ -3,19 +3,27 @@
 using namespace std;
 
 int B, h, n, T;
-int delta, d;
-
+long double delta, d;
+//fout << fixed<< setprecision(6)
 ifstream fin ("soricei.in");
 ofstream fout ("soricei.out");
 
 int calculateDelta(int B) {
-    return ((4 * B * B) (n-h*h) / 2);
+    return (sqrt((4.0 * B * B * (n-h*h)) / n));
 } 
 
 void solve () {
     fin >> B >> h >> n;
     for ( int i = 1; i < n; ++ i ) {
         delta  = calculateDelta(B);
+        fout << delta << " ";
+        long double d1 =  (2.0 * B + delta ) / 2 * B;
+        long double d2 =  (2.0 * B - delta ) / 2 * B;
+            fout << fixed << setprecision(6) << d2 << " ";
+            B = d2;
+        
+            fout << fixed << setprecision(6) << d1 << " ";
+            B =  d1; 
     }
 }
 
