@@ -2,28 +2,28 @@
 
 using namespace std;
 
-int B, h, n, T;
-long double delta, d;
+int T;
+double B, H, n;
+double b[105], a, h[105];
 //fout << fixed<< setprecision(6)
 ifstream fin ("soricei.in");
 ofstream fout ("soricei.out");
 
-int calculateDelta(int B) {
-    return (sqrt(4.0 * B * B * h * h *(n-1)));
+int calculateDelta(int i) {
+    return (sqrt(i*H*2*a/(B*n)));
 } 
 
 void solve () {
-    fin >> B >> h >> n;
-    for ( int i = 1; i < n; ++ i ) {
-        delta  = calculateDelta(B);
-        fout << delta << " ";
-        long double d1 =  (2.0 * B * h + delta ) / 2 * B;
-        long double d2 =  (2.0 * B * h - delta ) / 2 * B;
-            fout << fixed << setprecision(6) << d2 << " ";
-            B = d2;
-        
-            fout << fixed << setprecision(6) << d1 << " ";
-            B =  d1; 
+    fin >> B >> H >> n;
+    a = B*H/2;
+    for ( int i = 1; i <= n; ++ i ) {
+        b[i] = i * B * B;
+        b[i] /= n;
+        b[i] = sqrt(b[i]);
+    }
+    for ( int i = n - 1; i >= 1; -- i ) {
+        h[i] = H - sqrt(i*H*2*a/(B*n));
+        fout<<fixed<<setprecision(6)<<h[i]<<" ";
     }
 }
 
