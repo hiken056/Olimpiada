@@ -5,35 +5,45 @@ using namespace std;
 ifstream fin ("estearbore.in");
 ofstream fout ("estearbore.out");
 
-int N, M, x, y, G[101][101];
-bool viz[101];
+int N, G[101][101];
+int viz[101];
 
-void bfs(int root) {
-    queue <int> Q;
+
+void bfs (int root ) {
+    int q[101];
+    int in = 1, sf = 1;
     viz[root] = 1;
-    Q.emplace(root);
-    while (!Q.empty() ) {
-        for ( int i = 1; i <= N; ++ i ) {
-            if ( viz[i] == 0 && G[i][Q.front()])
-            viz[i] = 1;
-            Q.emplace(i);   
+    q[1] = root;
+    while ( in <= sf ) {
+        int x = q[in];
+        for ( int i = 1; i <= N; ++ i ){
+            if ( viz[i] == 0 && G[i][x]) {
+                viz[i] = 1;
+                q[++sf] = i;
+            }
         }
-        Q.pop();
+        in ++;
     }
-} 
+}
 
 int main () {
     fin >> N;
-    M = 0;
+    int x, y;
+    int M = 0;
     while ( fin >> x >> y ) {
         G[x][y] = 1;
         G[y][x] = 1;
-        M ++;
+        M += 1;
     }
-    fout << M << '\n';
+    if ( N + 1 != M ){
+        fout << "NU", exit(0);
+    }
     bfs(1);
+
     for ( int i = 1; i <= N; ++ i ) {
-        fout << viz[i] << " ";
+        if ( viz[i] == 0 ) 
+            fout << "NU", exit(0);
     }
+    fout << "DA";
     return 0;
 }
