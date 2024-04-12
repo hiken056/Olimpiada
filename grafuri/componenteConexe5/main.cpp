@@ -18,6 +18,10 @@ void dfs (int root ) {
     }
 }
 
+void bfs(int root) {
+    
+}
+
 void solve (int nr) {
     int elem = 0;
     for ( int i = 1; i <= N; ++ i ) {
