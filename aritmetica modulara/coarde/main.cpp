@@ -7,7 +7,7 @@ ofstream fout ("coarde.out");
 
 const int MODULO = 9999991;
 
-int N;
+int num;
 
 int log_pow(int n, int p) {
     if ( p == 0 ) return 1;
@@ -39,12 +39,7 @@ int catalan(int n) {
 }
 
 int main () {
-    fin >> N;
-    int cnt = 1;
-    while ( N != 0 ) {
-        fout << cnt << ":" << catalan(N) << '\n';
-        cnt ++;
-        fin >> N;
-    }
+    fin >> num;
+    fout << catalan(num);
     return 0;
 }
