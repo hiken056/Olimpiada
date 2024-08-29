@@ -13,7 +13,7 @@ int main () {
     for ( int i = 3; i <= N; ++ i ) {
         dp[i] = dp[i-1] + dp[i-2];
     }
-    
-    cout << dp[N];
+
+    cout << dp[N] << '\n';
     return 0;
 }
