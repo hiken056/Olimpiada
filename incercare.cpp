@@ -3,6 +3,8 @@
 using namespace std;
 
 int main() {
-    cout << "da\n";
+    string var;
+    cin >> var;
+    cout << var << '\n';
     return 0;
 }
