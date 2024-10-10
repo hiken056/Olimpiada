@@ -2,8 +2,8 @@
 
 using namespace std;
 
-ifstream fin("cladire.in");
-ofstream fout("cladire.out");
+ifstream fin("cladire1.in");
+ofstream fout("cladire1.out");
 
 const int mod = 9901;
 const int MAXN = 1005;
@@ -29,9 +29,9 @@ int main()
         for (int j = 1; j <= m; ++j)
         {
             if ( i == 1 && j == 1 ) dp[i][j] = 1;
-            if ( i == 1 && j != 1 && a[i][j] == 0 ) dp[i][j] = dp[i][j-1]; 
-            if ( i != 1 && j == 1 && a[i][j] == 0 ) dp[i][j] = dp[i-1][j];
-            if ( a[i][j] == 0 && i != 1 && j != 1 ) dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+            if ( i == 1 && j != 1 && a[i][j] == 0 ) dp[i][j] = dp[i][j-1] % mod; 
+            if ( i != 1 && j == 1 && a[i][j] == 0 ) dp[i][j] = dp[i-1][j] % mod;
+            if ( i != 1 && j != 1 && a[i][j] == 0 ) dp[i][j] = (dp[i - 1][j] + dp[i][j - 1]) % mod;
         }
     }
     // for (int i = 1; i <= n; ++i)
@@ -52,6 +52,6 @@ int main()
     //     fout << '\n';
     // }
 
-    fout << dp[n][m] % mod;
+    fout << dp[n][m];
     return 0;
 }
