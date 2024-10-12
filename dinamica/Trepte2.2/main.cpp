@@ -12,9 +12,11 @@ int main () {
     cin >> n >> k;
     dp[1] = 1;
     for ( int i = 2; i <= n; ++ i ) {
-        dp[i] = sp % mod;
-        sp += dp[i] % mod;
-        if ( i >= k ) sp-= dp[i-k] % mod;
+        dp[i] = sp;
+        sp += dp[i];
+        if ( i >= k ) sp-= dp[i-k];
+        if ( sp < 0 ) sp += mod;
+        if ( sp >= mod ) sp-= mod; 
     }
     cout << dp[n];
 
