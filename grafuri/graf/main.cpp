@@ -2,47 +2,41 @@
 
 using namespace std;
 
-ifstream fin ( "graf.in");
-ofstream fout ( "graf.out" );
+ifstream fin ("graf.in");
+ofstream fout ("graf.out");
+
+//se face cu bfs distanta cea mai scurta de la capete la nodul i
+//daca pathX[i] + pathY[i] == pathX[Y] atunci apartine lantului
+//pentru a fi in toate lanturile, trebuie sa apartina si sa fie singur pe nivelul sau 
+//(daca luam graf ca un arbore sau dupa cum se parcurge bfs ul)
+//daca ii singur pe nivel, apartine in graf si suma drumurilor la capete = drumul atunci satisface cerinta 
 
 const int MAXN = 7505;
+
 int N, M, X, Y;
+int pathX[MAXN];
+int pathY[MAXN];
+int vfLvl[MAXN];
+bool isInPath[MAXN];
 vector <int> G[MAXN];
 queue <int> Q;
-int rez1[MAXN];
-int rez2[MAXN];
-int tata1[MAXN];
-int tata2[MAXN];
-int path[MAXN];
 
-void bfs ( int root, int rez[], int tata[]) {
-    Q.emplace(root);
-    rez[root] = 0;
+void bfs (int root, int path[] ) {
+    Q.push(root);
+    path[root] = 0;
     while ( !Q.empty() ) {
-        int node =  Q.front();
+        int node = Q.front();
         Q.pop();
         for ( auto vecin : G[node] ) {
-            if ( rez[vecin] == -1 ) {
-                Q.emplace(vecin);
-                rez[vecin] = rez[node] + 1;
-                tata[vecin] = node;
+            if ( path[vecin] == -1 ){
+                path[vecin] = path[node] + 1;
+                Q.push(vecin);
             }
         }
     }
 }
 
-void reconstructPath ( int x, int y, int tata[] ) {
-   int cont = 0;
-   for ( int i = y; i != 0; -- i ) {
-        path[cont ++] = i;
-   }
-   for ( int i = 1; i <= N; ++ i) {
-        cout << path[i] << " ";
-   }
-} 
-
 int main () {
-
     fin >> N >> M >> X >> Y;
     while ( M -- ) {
         int x, y;
@@ -51,20 +45,30 @@ int main () {
         G[y].push_back(x);
     }
     for ( int i = 1; i <= N; ++ i ) {
-        rez1[i] = -1;
-        rez2[i] = -1;
+        pathX[i] = -1;
+        pathY[i] = -1;
     }
-    bfs(X, rez1, tata1);
-    bfs(Y, rez2, tata2);
-    for ( int i = 1; i <= N; ++ i ) {
-        fout << rez1[i] <<  " ";
-    }
-    fout << '\n';
-    for ( int i = 1; i <= N; ++ i ) {
-        fout << rez2[i] <<  " ";
+    bfs( X, pathX );
+    bfs(Y, pathY);
+
+    for (int i = 1; i <= N; ++ i) {
+        if ( pathX[i] + pathY[i] == pathX[Y]) {
+            vfLvl[pathX[i]] ++;
+            isInPath[i] = 1;
+        }
     }
 
-    reconstructPath(X, Y, tata1);
+    int countNodes = 0;
+    for ( int i = 1; i <= N; ++ i) {
+        if ( vfLvl[pathX[i]] == 1 && isInPath[i] == 1 ) {
+            countNodes ++;
+        }
+    }
+    fout << countNodes << '\n';
+    for ( int i = 1; i <= N; ++ i ) {
+        if ( vfLvl[pathX[i]] == 1 && isInPath[i] == 1 ) {
+            fout << i << " ";
+        }
+    }
     return 0;
 }
-
