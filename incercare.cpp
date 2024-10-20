@@ -3,8 +3,7 @@
 using namespace std;
 
 int main() {
-    string var;
-    cin >> var;
-    cout << var << '\n';
+    cout << "Merge";
+    cout << '\n';
     return 0;
 }

@@ -5,21 +5,38 @@ using namespace std;
 ifstream fin ("nivele11.in");
 ofstream fout ("nivele11.out");
 
-const int MAXN = 1e2 + 5;
+const int MAXN = 105;
+int N, root, nrNiv;
+vector < int > G[MAXN];
+set < int > lvls[MAXN];
+bool viz[MAXN];
 
-int N, nr;
-int tati[MAXN];
-vector <int> G[MAXN];
+void dfs ( int node, int lvl ) {
+    viz[node] = 1;
+    nrNiv = max( lvl, nrNiv);
+    lvls[lvl].insert(node);
+    for ( auto vecin : G[node] ) {
+        if ( !viz[vecin] ) {
+            dfs(vecin, lvl + 1);
+        }
+    }
+}
 
 int main () {
     fin >> N;
     for ( int i = 1; i <= N; ++ i ) {
-        fin >> tati[i];
-        if ( tati[i] > nr ) nr = tati[i];
+        int x;
+        fin >> x;
+        if ( x == 0 ) root = i;
+        else {
+            G[x].push_back(i);
+            G[i].push_back(x);
+        }
     }
-    for ( int i = 0; i <= nr; ++i ) {
-        for ( int j = 1; j <= N; ++ j ) {
-            if ( tati[j] == i ) fout << j << " ";
+    dfs(root, 0);
+    for ( int i = 0; i <= nrNiv; ++ i ) {
+        for ( auto it : lvls[i] ) {
+            fout << it << " ";
         }
         fout << '\n';
     }
