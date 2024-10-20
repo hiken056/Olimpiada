@@ -1,5 +1,6 @@
-    #include <bits/stdc++.h>
-
+    #include <fstream>
+    #include <vector>
+    #include <queue>
 using namespace std;
 
 ifstream fin ("BFS.in");
@@ -12,7 +13,7 @@ bool viz[MAXN + 5];
 queue <int> coada;
 
 void bfs( int root ) {
-    coada.emplace(root);
+    coada.push(root);
     while ( !coada.empty() ) {
         int node = coada.front();
         coada.pop();
@@ -21,7 +22,7 @@ void bfs( int root ) {
         fout << node << " ";
         for ( const auto& vecin: G[node]) {
             if ( !viz[vecin] ) {
-                coada.emplace(vecin);
+                coada.push(vecin);
             }
         }
     } 
