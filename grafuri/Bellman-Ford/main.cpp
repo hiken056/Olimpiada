@@ -28,7 +28,7 @@ int main () {
     inQ[1] = 1;
 
     while ( ! Q.empty( ) ) {
-        
+        //poate merge 
     }
     return 0;
 }
