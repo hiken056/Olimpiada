@@ -25,6 +25,7 @@ int main () {
         dist[frt] = 0;
         fortarete[frt] = frt;
         S.insert({0, frt});
+        //inseram frt si distanta in set
     }
     while ( M -- ) {
         int x, y, c;
