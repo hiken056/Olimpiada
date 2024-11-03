@@ -1,87 +1,88 @@
-#include <bits/stdc++.h>
-
+#include <iostream>
+#include <vector>
+#include <queue>
+#define inf 1000000001
 using namespace std;
 
-ifstream in ("lanterna.in");
-ofstream out ("lanterna.out");
+//codul lui ignat
 
-#define MAXN 55
-#define oo 1e7
-
-int N, M, K;
-bool baza[MAXN];
-int timp[MAXN];
-int lant;
-int path[MAXN];
-
-vector < pair < pair < int, int > , int > > G[MAXN];
-set < pair < int, int > > S;
-
-int main () {
-    in >> N >> K;   
-    for ( int i = 1; i <= N; ++ i ) {
-        in >> baza[i];
+bool station[55];
+int k, n, m, x, y, c, w, mindist;
+int dist[55][1005];
+queue < pair < pair < int , int > , int > > q;
+struct Road{
+    int nd, t, w;
+    Road(int nd, int t, int w) {
+        this->w = w; this->nd = nd; this->t = t;
     }
-    in >> M;
-    while ( M -- ) {
-        int x, y, t, w;
-        in >> x >> y >> t >> w;
-        G[x].push_back({{y, t}, w});
-        G[y].push_back({{x, t}, w});
+};
+
+vector < Road > v[55];
+
+void read() {
+    cin >> n >> k; 
+    for (int i=1;i<=n;i++) {
+        cin >> station[i];
     }
-    for ( int i = 2; i <= N; ++ i ) {
-        timp[i] = oo;
+    cin >> m;
+    for (int i=1;i<=m;i++) {
+        cin >> x >> y >> c >> w;
+        v[x].push_back(Road(y, c, w));
+        v[y].push_back(Road(x, c, w));
     }
-    path[1] = -1;
-    S.insert({0, 1});
-    while ( !S.empty() ) {
-        int nod = S.begin()->second;
-        S.erase(S.begin());
-        for (auto vecin : G[nod] ) {
-            if ( timp[vecin.first.first] > timp[nod] + vecin.first.second ) {
-                S.erase({timp[vecin.first.first], vecin.first.first});
-                timp[vecin.first.first] = timp[nod] + vecin.first.second;
-                S.insert({timp[vecin.first.first], vecin.first.first});
-                path[vecin.first.first] = nod; 
+}
+
+void reset() {
+    for (int i=1;i<=n;i++) {
+        for (int j=0;j<=k;j++) {
+            dist[i][j] = inf;
+        }
+    }
+}
+
+int dijkstra(int watts) {
+    reset();
+    dist[1][watts] = 0;
+    q.push({{0, watts}, 1});
+    while (!q.empty()) {
+        int watts_left = q.front().first.second;
+        int dist_node = q.front().first.first;
+        int node = q.front().second;
+        q.pop();
+        if (dist[node][watts_left] < dist_node) continue;
+        for (auto ed: v[node]) {
+            if (ed.w > watts_left) continue;
+            int next_watts = (station[ed.nd] ? watts : watts_left-ed.w);
+            if (dist[ed.nd][next_watts] > dist[node][watts_left] + ed.t) {
+                dist[ed.nd][next_watts] = dist[node][watts_left] + ed.t;
+                q.push({{dist[ed.nd][next_watts], next_watts}, ed.nd});
             }
         }
     }
-
-    vector <int> fullpath;
-
-    for ( int nod = N; nod != -1; nod = path[nod] ) {
-        fullpath.push_back(nod);
+    int mindist = inf;
+    for (int j=0;j<=k;j++) {
+        mindist = min(mindist, dist[n][j]);
     }
-    reverse(fullpath.begin(), fullpath.end());
+    return mindist;
+}
 
-    int sum = 0;
-    int max = 0;
-
-    int maxSum = 0;
-
-    for (int i = 0; i < fullpath.size(); ++i) {
-        int v = fullpath[i];
-        if (baza[v] == 1 || v == 1) {
-            for (int j = i + 1; j < fullpath.size(); ++j) {
-                int u = fullpath[j];
-                if (baza[u] == 1 || u == N) {
-                    int sum = 0;
-                    for (int k = i; k < j; ++k) {
-                        int cur = fullpath[k];
-                        int next = fullpath[k + 1];
-                        for (auto vecin : G[cur]) {
-                            if (vecin.first.first == next) {
-                                sum += vecin.second; 
-                                break;
-                            }
-                        }
-                    }
-                    if ( maxSum < sum ) maxSum = sum;
-                    i ++;
-                }
-            }
+void solve() {
+    int st = 1, dr = k;
+    mindist = dijkstra(k);
+    while (st != dr) {
+        int mij = (st + dr) / 2;
+        if (dijkstra(mij) == mindist) {
+            dr = mij;
         }
+        else st = mij + 1;
     }
-    out << timp[N] << " " << maxSum;
+    cout << mindist << " " << st;
+}
+
+int main() {
+    freopen("lanterna.in", "r", stdin);
+    freopen("lanterna.out", "w", stdout);
+    read();
+    solve();
     return 0;
 }
