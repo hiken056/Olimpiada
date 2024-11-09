@@ -2,71 +2,57 @@
 
 using namespace std;
 
-ifstream fin ( "disjoint.in");
+ifstream fin ("disjoint.in");
 ofstream fout ("disjoint.out");
 
-int n, queries;
-vector<int>root, height;
+int N, M;
+int query, x, y;
+vector <int> tati, inaltime;
 
-void initializeRoots () { //initializam root urile cu valorile lor 
-    for ( int i = 1; i <= n; ++ i) {
-        root[i] = i;
+int rad(int nod) {
+    if ( nod == tati[nod] ) {
+        return nod;
+    }
+    int rnod = rad(tati[nod]);
+    tati[nod] = rnod;
+    return rnod;
+}
+
+void reuniune(int x, int y)  {
+    int rx = rad(x);
+    int ry = rad(y);
+    if ( inaltime[rx] > inaltime[ry] ) {
+        tati[ry] = rx;
+    }
+    else if ( inaltime[rx] < inaltime[ry]) {
+        tati[rx] = ry;
+    }
+    else {
+        tati[ry] = rx;
+        inaltime[rx] ++;
     }
 }
 
-void readData () { //citim
-    fin >> n >> queries;
-    root = vector<int>(n+1);
-    height = vector<int>(n+1); 
-    initializeRoots();
+bool interogare(int x, int y) {
+    return rad(x) == rad(y);
 }
 
-int getRoot (int node) {   //tinem minte root-ul pentru fiecare node
-    if ( root[node] == node) 
-        return node;
-    return (root[node] = getRoot(root[node]));
-}
 
-void unite ( int x, int y) {
-    int rootX = getRoot(x);
-    int rootY = getRoot(y);
-    if ( rootX != rootY ) {
-        if ( height[rootX] <= height[rootY] ) {
-            root[rootX] = rootY;
-            if ( height[rootX] == height[rootY] )
-                ++height[rootY];
+int main () {
+    fin >> N >> M;
+    tati.resize(N + 1);
+    inaltime.resize(N+1);
+    for ( int i = 1; i <= N; ++ i) {
+        tati[i] = i;
+    }
+    while ( M -- ) {
+        fin >> query >> x >> y;
+        if ( query == 1 ) {
+            reuniune(x, y);
         }
         else {
-            root[rootY] = rootX;
+            (interogare(x, y) ? fout << "DA\n" : fout << "NU\n");   
         }
     }
-}
-
-bool query ( int x, int y) {
-    return getRoot(x) == getRoot(y);
-}
-
-void solveQueries () {
-    int task, x, y;
-    while (queries -- ) {
-        fin >> task >> x >> y;
-        if (task == 1 ) {
-            unite(x,y);
-        }
-        else {
-            if ( query (x, y)) 
-                fout << "DA\n"; 
-            else 
-                fout << "NU\n";
-        }
-    }
-}
-
-int main() {
-    readData();
-    solveQueries();
-
-    fin.close();
-    fout.close();
-    return 0;   
+    return 0;
 }
