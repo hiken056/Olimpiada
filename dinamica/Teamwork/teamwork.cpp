@@ -12,6 +12,7 @@ int e[MAXN][MAXN];
 
 // 1 << k  = 2^k
 // mask & ( 1 << k ) = daca bitul k de pe mask este 1/0
+// mask ^ (1 << k) = o noua maska in care bitul k este setat
 
 int n;
 
