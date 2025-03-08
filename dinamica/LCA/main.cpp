@@ -6,6 +6,24 @@ using namespace std;
 ifstream fin("lca.in");
 ofstream fout("lca.out");
 
+/*Se dă un arbore cu rădăcină T. Cel mai apropiat strămoş comun a două noduri u
+ * şi v este nodul w care este strămoş al ambelor noduri u şi v şi are cea mai
+ * mare adâncime în T.*/
+/**/
+/*Considerăm că arborele T are n noduri şi are rădăcina în nodul 1. Dându-se o
+ * mulţime arbitrară P = {{u,v}}, cu m perechi neordonate de noduri din T, se
+ * cere să se determine cel mai apropiat strămoş al fiecărei perechi din P.*/
+/**/
+/*Date de intrare*/
+/*Pe prima linie a fişierului de intrare lca.in se găsesc n şi m. Următoarea
+ * linie conţine n-1 numere naturale, cel de-al i-lea număr reprezentând tatăl
+ * nodului i+1 (nodul 1 fiind rădăcină nu are tată). Pe următoarele m linii se
+ * află câte o pereche de numere naturale, reprezentând elementele mulţimii P.*/
+/**/
+/*Date de ieşire*/
+/*Fişierul de ieşire lca.out va conţine m linii, linia a i-a conţinând răspunsul
+ * celei de a i-a întrebări.*/
+/**/
 const int MAXN = 1e5;
 int N, M, k, x, y, n1, n2;
 int p2[2 * MAXN + 5];

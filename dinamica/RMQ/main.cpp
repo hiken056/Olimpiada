@@ -7,6 +7,19 @@ ofstream fout("rmq.out");
 
 const int MAXN = 1e5;
 
+/*Se da un vector cu N elemente. Scrieti un program care raspunde la M intrebari
+ * de tipul "Care este elementul minim din intervalul [x,y]?"*/
+/**/
+/*Date de intrare*/
+/*Pe prima linie a fisierului rmq.in sunt date numerele N si M. Urmatoarele N
+ * linii vor contine cate un numar reprezentand elementele vectorului.
+ * Urmatoarele M linii vor contine cate 2 numere reprezentand valorile x si y
+ * care definesc intrebarile.*/
+/**/
+/*Date de iesire*/
+/*In fisierul de iesire rmq.out vor fi M linii, fiecare continand cate un numar,
+ * pe linia i aflandu-se raspunsul pentru intrebarea i.*/
+/**/
 int N, M;
 int rmq[MAXN + 5][17];
 int p2[MAXN + 5]; // cea mai mare putere j pentru care 2^j <= i
