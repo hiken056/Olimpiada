@@ -5,32 +5,30 @@ using namespace std;
 ifstream fin("trapez.in");
 ofstream fout("trapez.out");
 
-const int MAXN = 1e3 + 5;
+const int MAXN = 1005;
 int N, ans;
-int xx;
-double yy;
 
-struct line
-{
-    int x1, x2;
-    double y1, y2;
-    double slope;
-}lines[MAXN];
+struct point {
+   int x;
+   double y;
+//    bool operator < (point& a) const {
+//         if ( x )
+//    }
+} puncte[MAXN];
+
+double pante[MAXN];
+
 
 int main () {
     fin >> N;
     int k = 1;
     ans = 0;
-    while ( fin >> xx >> yy ) {
-        
+    for ( int i = 1; i <= N; ++ i ) {
+        fin >> puncte[i].x >> puncte[i].y;
     }
     for ( int i = 1; i < N; ++ i ) {
         for ( int j = i + 1; j <= N; ++ j ) {
-            point a = puncte[i];
-            point b = puncte[j];
-            lines[k].a = a;
-            lines[k].b = b;
-            lines[k].slope = (b.y - a.y)/(b.x - a.x);
+            pante[k] = (puncte[j].y - puncte[i].y)/(puncte[j].x - puncte[i].x);
             k ++;
         }
     }
@@ -41,8 +39,8 @@ int main () {
     // }
     for ( int i = 1; i < k; ++ i ) {
         for ( int j = i + 1; j <= k; ++ j ) {
-            if ( lines[i].slope == lines[j].slope ) ans ++;
+            if ( pante[i] == pante[j] ) ans ++;
         }
-    }
+    } 
     fout << ans;
 }
