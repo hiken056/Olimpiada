@@ -39,7 +39,7 @@ int main() {
     Point first, ext;
     fin >> ext.x >> ext.y;
     first = ext;
-    for ( int i = 0; i < N; ++ i ) {
+    for ( int i = 1; i < N; ++ i ) {
         Point second;
         fin >> second.x >> second.y;
         b += cmmdc(abs(ext.x - second.x), abs(ext.y - second.y));
