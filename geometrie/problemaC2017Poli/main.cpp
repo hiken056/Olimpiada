@@ -36,7 +36,5 @@ int main() {
             cntMax = max(cntMax, cnt);
         }
     }
-    if ( N == 1 ) cntMax = 1;
-    if ( N == 2 ) cntMax = 2;   
     fout << cntMax;
 }
